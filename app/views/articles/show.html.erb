@@ -6,7 +6,7 @@
 <% end %>
 <p><%= @article.body %></p>
 <br />
-<p>Posted <%= distance_of_time_in_words(@article.created_at, Time.now) %> ago</p>
+<p>Posted <%= distance_of_time_in_words(@article.created_at, Time.now) %> ago by <%= current_user.username %></p>
 <br />
 <p>
   Tags:
