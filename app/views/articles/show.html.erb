@@ -1,12 +1,20 @@
 <h1><%= @article.title %></h1>
+
+<h2><%= link_to "<< Back to Articles List", articles_path %></h2>
+<% if @article.image.exists? %>
+<p><%= image_tag @article.image.url(:large) %></p>
+<% end %>
+<p><%= @article.body %></p>
+<br />
+<p>Posted <%= distance_of_time_in_words(@article.created_at, Time.now) %> ago</p>
+<br />
 <p>
   Tags:
   <% @article.tags.each do|tag| %>
     <%= link_to tag.name, tag_path(tag) %>
   <% end %>
 </p>
-<p><%= @article.body %></p>
-<p>Posted <%= distance_of_time_in_words(@article.created_at, Time.now) %> ago</p>
+<br />
 <%= link_to "edit", edit_article_path(@article) %>
 <%= link_to "delete", article_path(@article), method: :delete, confirm: "Really delete the article?" %>
 <h3>Comments (<%= @article.comments.size %>)</h3>
