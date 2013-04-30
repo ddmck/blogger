@@ -1,6 +1,8 @@
 <h1><%= @article.title %></h1>
 
 <h2><%= link_to "<< Back to Articles List", articles_path %></h2>
+
+<div class="container">
 <% if @article.image.exists? %>
 <p><%= image_tag @article.image.url(:large) %></p>
 <% end %>
@@ -11,16 +13,19 @@
 <p>
   Tags:
   <% @article.tags.each do|tag| %>
-    <%= link_to tag.name, tag_path(tag) %>
+    <%= link_to tag.name, tag_path(tag), class: "btn" %>
+  <% end %>
+
+  <% if logged_in? %>
+  <%= link_to "edit", edit_article_path(@article), class: "btn btn-small btn-primary"%>
+  <%= link_to "delete", article_path(@article), class: "btn btn-small btn-danger", method: :delete, confirm: "Really delete the article?" %>
   <% end %>
 </p>
-<br />
-<% if logged_in? %>
-  <%= link_to "edit", edit_article_path(@article) %>
-  <%= link_to "delete", article_path(@article), method: :delete, confirm: "Really delete the article?" %>
-<% end %>
+
+
 <h3>Comments (<%= @article.comments.size %>)</h3>
 <%= render partial: 'articles/comment', collection: @article.comments %>
 <%= render partial: 'comments/form' %>
 
 <%= link_to "<< Back to Articles List", articles_path %>
+</div>
